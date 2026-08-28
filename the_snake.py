@@ -125,3 +125,34 @@ def handle_keys(game_object):
             if event.key == pygame.K_UP and game_object.direction != DOWN:
                 game_object.next_direction = UP
             elif event.key == pygame.K_DOWN and game_object.direction != UP:
+                game_object.next_direction = DOWN
+            elif event.key == pygame.K_LEFT and game_object.direction != RIGHT:
+                game_object.next_direction = LEFT
+            elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
+                game_object.next_direction = RIGHT
+
+
+def main():
+    """Основная функция игры."""
+    pygame.init()
+    snake = Snake()
+    apple = Apple()
+
+    while True:
+        handle_keys(snake)
+        snake.update_direction()
+        snake.move()
+
+        if snake.get_head_position() == apple.position:
+            snake.length += 1
+            apple.randomize_position()
+
+        screen.fill(BOARD_BACKGROUND_COLOR)
+        snake.draw()
+        apple.draw()
+        pygame.display.update()
+        clock.tick(SPEED)
+
+
+if __name__ == '__main__':
+    main()
